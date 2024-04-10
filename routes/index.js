@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const passport = require("passport");
 
 // Require controller modules.
 const user_controller = require("../controllers/userController");
@@ -20,13 +19,6 @@ router.post("/sign-up", user_controller.user_signup_post);
 router.get("/log-in", user_controller.user_login_get);
 
 // POST request for Log-in page.
-router.post(
-	"/log-in",
-	// Redirect bug solved by putting this here instead of userController
-	passport.authenticate("local", {
-		successRedirect: "/",
-		failureRedirect: "/",
-	})
-);
+router.post("/log-in", user_controller.user_login_post);
 
 module.exports = router;

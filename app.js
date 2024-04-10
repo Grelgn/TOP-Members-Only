@@ -5,7 +5,6 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcryptjs");
-const asyncHandler = require("express-async-handler");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 require("dotenv").config();
@@ -34,7 +33,7 @@ passport.use(
 			if (!user) {
 				return done(null, false, { message: "Incorrect username" });
 			}
-			const match = bcrypt.compare(password, user.password);
+			const match = await bcrypt.compare(password, user.password);
 			if (!match) {
 				return done(null, false, { message: "Incorrect password" });
 			}
