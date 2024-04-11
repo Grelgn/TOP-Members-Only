@@ -61,7 +61,6 @@ exports.user_signup_post = [
 	asyncHandler(async (req, res, next) => {
 		// Extract the validation errors from a request.
 		const errors = validationResult(req);
-		let password;
 
 		const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
@@ -97,7 +96,46 @@ exports.user_login_get = (req, res, next) => {
 //  User log in form on POST
 exports.user_login_post = [
 	passport.authenticate("local", {
-		successRedirect: "/success",
-		failureRedirect: "/fail",
+		successRedirect: "/",
+		failureRedirect: "/log-in",
+	}),
+];
+
+//  Join club on GET
+exports.user_join_get = (req, res, next) => {
+	res.render("join", { title: "Join the Club", user: res.locals.currentUser });
+};
+
+//  Join club on POST
+exports.user_join_post = [
+	body("secret_code")
+		.trim()
+		.notEmpty()
+		.escape()
+		.withMessage("Secret code must be specified.")
+		.isAlphanumeric()
+		.withMessage("Input has non-alphanumeric characters."),
+	// Process request after validation and sanitization.
+	asyncHandler(async (req, res, next) => {
+		// Extract the validation errors from a request.
+		const errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+			// There are errors. Render form again.
+			res.render("join", {
+				title: "Join the Club",
+				errors: errors.array(),
+			});
+			return;
+		}
+
+		if (req.body.secret_code.toLowerCase() === process.env.CLUBPW) {
+			await User.findByIdAndUpdate(res.locals.currentUser._id, {
+				membership_status: true,
+			});
+			res.redirect(`/`);
+		} else {
+			res.redirect("/join");
+		}
 	}),
 ];
