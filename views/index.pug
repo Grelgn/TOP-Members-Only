@@ -16,3 +16,5 @@ block content
       if currentUser != undefined && currentUser.membership_status == true
         p #{message.timestamp}
         p #{message.user.username}
+      if currentUser != undefined && currentUser.isAdmin == true
+        a(href="delete-message/" + message._id) Delete Message

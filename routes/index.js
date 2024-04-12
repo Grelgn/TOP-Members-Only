@@ -44,4 +44,10 @@ router.get("/admin", user_controller.user_admin_get);
 // POST request for Admin page.
 router.post("/admin", user_controller.user_admin_post);
 
+// GET request for Delete Message.
+router.get("/delete-message/:id", message_controller.delete_message_get);
+
+// POST request for Delete Message.
+router.post("/delete-message/:id", message_controller.delete_message_post);
+
 module.exports = router;

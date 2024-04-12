@@ -60,3 +60,18 @@ exports.new_message_post = [
 		}
 	}),
 ];
+
+// Delete message GET
+exports.delete_message_get = async (req, res, next) => {
+	const message = await Message.findById(req.params.id).populate().exec();
+	res.render("delete_message", { message: message });
+};
+
+// Delete message POST
+exports.delete_message_post = [
+	asyncHandler(async (req, res, next) => {
+		console.log(req.params)
+		await Message.findByIdAndDelete(req.params.id);
+		res.redirect("/");
+	}),
+];
