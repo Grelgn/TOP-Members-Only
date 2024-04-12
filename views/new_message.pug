@@ -1,0 +1,22 @@
+extends layout 
+
+block content
+
+  h1 #{title}
+
+  if currentUser != undefined
+    form(method="POST") 
+      div.form-group
+        label(for="title") Title:
+        input#title.form-control(type="text" name="title" required)
+      div.form-group
+        label(for="text") Message:
+        input#text.form-control(type="text" name="text" required)
+      button.btn.btn-primary(type='submit') Submit
+  else 
+    h2 You must be logged in to view this page
+  if errors
+    ul
+      for error in errors
+        li!= error.msg
+

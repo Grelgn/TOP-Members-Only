@@ -103,7 +103,7 @@ exports.user_login_post = [
 
 //  Join club on GET
 exports.user_join_get = (req, res, next) => {
-	res.render("join", { title: "Join the Club", user: res.locals.currentUser });
+	res.render("join", { title: "Join the Club" });
 };
 
 //  Join club on POST

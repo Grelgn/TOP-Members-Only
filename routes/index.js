@@ -3,6 +3,7 @@ const router = express.Router();
 
 // Require controller modules.
 const user_controller = require("../controllers/userController");
+const message_controller = require("../controllers/messageController");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -26,5 +27,11 @@ router.get("/join", user_controller.user_join_get);
 
 // POST request for Join page.
 router.post("/join", user_controller.user_join_post);
+
+// GET request for New Message.
+router.get("/new-message", message_controller.new_message_get);
+
+// POST request for New Message.
+router.post("/new-message", message_controller.new_message_post);
 
 module.exports = router;

@@ -5,4 +5,7 @@ block content
 
   if currentUser != undefined
     h2 Hello #{currentUser.username}
-  p Welcome to #{title}
+    p Welcome to #{title}
+    a(href="/new-message") Send a New Message
+  else 
+    p Welcome to #{title}
