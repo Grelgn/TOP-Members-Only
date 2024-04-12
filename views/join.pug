@@ -4,11 +4,17 @@ block content
 
   h1 #{title}
 
-  form(method="POST") 
-    div.form-group
-      label(for="secret_code") Secret Code:
-      input#secret-code.form-control(type="text" name="secret_code" required)
-    button.btn.btn-primary(type='submit') Submit
+  if currentUser != undefined
+    if currentUser.membership_status == false
+      form(method="POST") 
+        div.form-group
+          label(for="secret_code") Secret Code:
+          input#secret-code.form-control(type="text" name="secret_code" required)
+        button.btn.btn-primary(type='submit') Submit
+    else 
+      h2 You are already a member of the club
+  else 
+    h2 You must be logged in to view this page
 
   if errors
     ul

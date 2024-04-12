@@ -16,12 +16,14 @@ html(lang='en')
             ul(class='sidebar-nav')
               li
                 a(href='/') Home
-              li
-                a(href='/sign-up') Sign Up
-              li
-                a(href='/log-in') Log In
-              li
-                a(href='/join') Join the Club
+              if currentUser == undefined
+                li
+                  a(href='/sign-up') Sign Up
+                li
+                  a(href='/log-in') Log In
+              if currentUser != undefined && currentUser.membership_status == false
+                li
+                  a(href='/join') Join the Club
         div(class='col-sm-10')
         div(class='col-sm-10')
           block content
