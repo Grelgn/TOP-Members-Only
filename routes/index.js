@@ -1,3 +1,4 @@
+const Message = require("../models/message");
 const express = require("express");
 const router = express.Router();
 
@@ -6,8 +7,11 @@ const user_controller = require("../controllers/userController");
 const message_controller = require("../controllers/messageController");
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
-	res.render("index", { title: "Members Only", user: res.locals.currentUser});
+router.get("/", async function (req, res, next) {
+	res.render("index", {
+		title: "Members Only",
+		messages: await Message.find().sort({ timestamp: -1 }).populate("user"),
+	});
 });
 
 // GET request for creating a User.
