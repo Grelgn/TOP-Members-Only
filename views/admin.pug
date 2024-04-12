@@ -1,0 +1,23 @@
+extends layout 
+
+block content
+
+  h1 #{title}
+
+  if currentUser != undefined
+    if currentUser.isAdmin == false
+      form(method="POST") 
+        div.form-group
+          label(for="admin_code") Admin Code:
+          input#admin-code.form-control(type="text" name="admin_code" required)
+        button.btn.btn-primary(type='submit') Submit
+    else 
+      h2 You are already an Admin
+  else 
+    h2 You must be logged in to view this page
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg
+

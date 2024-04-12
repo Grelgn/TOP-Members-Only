@@ -38,4 +38,10 @@ router.get("/new-message", message_controller.new_message_get);
 // POST request for New Message.
 router.post("/new-message", message_controller.new_message_post);
 
+// GET request for Admin page.
+router.get("/admin", user_controller.user_admin_get);
+
+// POST request for Admin page.
+router.post("/admin", user_controller.user_admin_post);
+
 module.exports = router;

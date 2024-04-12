@@ -139,3 +139,43 @@ exports.user_join_post = [
 		}
 	}),
 ];
+
+//  Admin form on GET
+exports.user_admin_get = (req, res, next) => {
+	res.render("admin", { title: "Admin Authorization" });
+};
+
+//  Admin form on POST
+exports.user_admin_post = [
+	body("admin_code")
+		.trim()
+		.notEmpty()
+		.escape()
+		.withMessage("Admin code must be specified.")
+		.isAlphanumeric()
+		.withMessage("Input has non-alphanumeric characters."),
+	// Process request after validation and sanitization.
+	asyncHandler(async (req, res, next) => {
+		// Extract the validation errors from a request.
+		const errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+			// There are errors. Render form again.
+			res.render("admin", {
+				title: "Admin Authorization",
+				errors: errors.array(),
+			});
+			return;
+		}
+
+		if (req.body.admin_code.toLowerCase() === process.env.ADMINPW) {
+			await User.findByIdAndUpdate(res.locals.currentUser._id, {
+				isAdmin: true,
+			});
+			res.redirect(`/`);
+		} else {
+			res.redirect("/admin");
+		}
+	}),
+];
+
